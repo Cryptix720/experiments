@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>grass</title>
+		<meta charset="utf-8">
+		<!--Import Google Icon Font-->
+ <link href="http://fonts.googleapis.com/icon?family=Material+Icons"
+rel="stylesheet"/>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.css">
+		<link src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.js"</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/
+materialize/0.97.7/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/
+materialize.min.js"></script>
+
+	
+		</head>
+
+
+			<div class="row" style="margin-top: 2px;margin-left: 2px">
+ <h1 class=" deep-orange-text darken-3">CyberDesignTUIX</h1>
+ <h3>15/12/2016</h3>
+ <div
+	
+	<div class="container">
+ <!-- Page Content goes here -->
+<h5 class="amber-text lighten-2"> To deny our own impulses is to deny the very thing that makes us human.</h5>
+ </div>
+	<body>
+
+	<style>
+			body {
+				background:#063;
+		
+				color:#ff9;
+				padding:10;
+				margin:10;
+				overflow:hidden;
+				font-family:georgia, Lato, Gill Sans, Calibri, Trebuchet, sans-serif;
+				text-align:center;
+						}
+	 .blocks{
+ height:5px;
+ outline: 1px solid #fff;
+ color:#fff;
+ }
+ .fullLength{
+ height: 100vh;
+ }
+ @media screen and (max-width: 600px){
+ .fullLength{
+ height: auto;
+ }
+ }
+ </style>
+		</style>
+		
+	
+		
+		<script src="js/three.js"></script>
+
+		<script src="js/Detector.js"></script>
+
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+			var camera, scene, renderer;
+
+			init();
+			animate();
+
+			function init() {
+
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
+				camera.position.set( 0, 75, 100 );
+
+				scene = new THREE.Scene();
+
+				var geometry = new THREE.PlaneBufferGeometry( 100, 100 );
+
+				var texture = new THREE.CanvasTexture( generateTexture() );
+
+				for ( var i = 0; i < 15; i ++ ) {
+
+					var material = new THREE.MeshBasicMaterial( {
+						color: new THREE.Color().setHSL( 0.3, 0.75, ( i / 15 ) * 0.4 + 0.1 ),
+						map: texture,
+						depthTest: false,
+						depthWrite: false,
+						transparent: true
+					} );
+
+					var mesh = new THREE.Mesh( geometry, material );
+
+					mesh.position.y = i * 0.25;
+					
+					mesh.rotation.x = - Math.PI / 2;
+
+					scene.add( mesh );
+
+				}
+
+				scene.children.reverse();
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setClearColor( 0x003302 );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function generateTexture() {
+
+				var canvas = document.createElement( 'canvas' );
+				canvas.width = 512;
+				canvas.height = 512;
+
+				var context = canvas.getContext( '2d' );
+
+				for ( var i = 0; i < 20000; i ++ ) {
+
+					context.fillStyle = 'hsl(0,0%,' + ( Math.random() * 50 + 50 ) + '%)';
+					context.beginPath();
+					context.arc( Math.random() * canvas.width, Math.random() * canvas.height, Math.random() + 0.15, 0, Math.PI * 2, true );
+					context.fill();
+
+				}
+
+				context.globalAlpha = 0.075;
+				context.globalCompositeOperation = 'lighter';
+
+				return canvas;
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+
+			}
+
+			function render() {
+
+				var time = Date.now() / 6000;
+
+				camera.position.x = 80 * Math.cos( time );
+				camera.position.z = 80 * Math.sin( time );
+				camera.position.z = 1 * Math.tan( time );
+
+				camera.lookAt( scene.position );
+
+				for ( var i = 0, l = scene.children.length; i < l; i ++ ) {
+
+					var mesh = scene.children[ i ];
+					mesh.position.x = Math.sin( time * 4 ) * i * i * 0.009;
+					mesh.position.z = Math.cos( time * 6 ) * i * i * 0.009;
+					mesh.position.y = Math.tan( time * 1) * i * i * 1.005;
+
+				}
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+		<script type="text/javascript">
+       
+	   $(function () {
+           $('.tags').material_chip({
+                data: [{
+                    tag: 'css',
+                     }, {
+                            tag: 'framework',
+                               }, {
+             tag: 'javascript',
+              },{
+                 tag: 'material design',
+                     }],
+                    secondaryPlaceholder:"No chips added. :(",
+                       placeholder:"Add more chips?"
+               });
+		//Add event handler
+               $('.tags').on('chip.add', function(e, chip){
+                alert("A chip was added");
+                                            });
+                 $('.tags').on('chip.delete', function(e, chip){
+                 alert("A chip was removed")
+                                               });
+                              $('.tags').on('chip.select', function(e, chip){
+                     alert("A chip was selected")
+                     });
+                           })
+		</script>
+		<script>
+		
+		$('.dob').pickadate({
+ selectMonths: true,
+ selectYears: 35
+ });
+In List
+		</script>
+	</body>
+</html>
